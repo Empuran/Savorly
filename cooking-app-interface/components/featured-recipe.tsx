@@ -4,9 +4,10 @@ import { Clock, Users, Flame, Star, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import Image from "next/image"
-import { recipes } from "@/lib/data"
+import { recipes as staticRecipes } from "@/lib/data"
+import { useRecipes } from "@/hooks/useFirestore"
 
-const steps = [
+const defaultSteps = [
   "Marinate chicken with herbs and olive oil",
   "Prep root vegetables and toss with seasoning",
   "Roast at 425\u00B0F for 45 minutes",
@@ -14,6 +15,16 @@ const steps = [
 ]
 
 export function FeaturedRecipe() {
+  const { recipes: firestoreRecipes, loading } = useRecipes()
+
+  // Fallback to static data
+  const recipes = !loading && firestoreRecipes.length > 0
+    ? firestoreRecipes
+    : staticRecipes
+
+  const recipe = recipes[0]
+  const steps = recipe.steps || defaultSteps
+
   return (
     <section className="py-16 md:py-20 bg-card">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
@@ -22,7 +33,7 @@ export function FeaturedRecipe() {
             Recipe of the Day
           </Badge>
           <h2 className="text-3xl md:text-4xl font-serif font-bold text-foreground text-balance">
-            Herb-Roasted Chicken with Root Vegetables
+            {recipe.title}
           </h2>
         </div>
 
@@ -30,8 +41,8 @@ export function FeaturedRecipe() {
           {/* Image */}
           <div className="relative aspect-[4/3] rounded-2xl overflow-hidden">
             <Image
-              src={recipes[0].image}
-              alt={recipes[0].title}
+              src={recipe.image}
+              alt={recipe.title}
               fill
               className="object-cover"
             />
@@ -43,26 +54,24 @@ export function FeaturedRecipe() {
             <div className="flex flex-wrap gap-4 mb-6">
               <div className="flex items-center gap-2 px-3 py-2 bg-secondary rounded-lg">
                 <Clock className="h-4 w-4 text-primary" />
-                <span className="text-sm font-medium text-secondary-foreground">55 min</span>
+                <span className="text-sm font-medium text-secondary-foreground">{recipe.time}</span>
               </div>
               <div className="flex items-center gap-2 px-3 py-2 bg-secondary rounded-lg">
                 <Users className="h-4 w-4 text-primary" />
-                <span className="text-sm font-medium text-secondary-foreground">4 servings</span>
+                <span className="text-sm font-medium text-secondary-foreground">{recipe.servings} servings</span>
               </div>
               <div className="flex items-center gap-2 px-3 py-2 bg-secondary rounded-lg">
                 <Flame className="h-4 w-4 text-primary" />
-                <span className="text-sm font-medium text-secondary-foreground">420 cal</span>
+                <span className="text-sm font-medium text-secondary-foreground">{recipe.calories} cal</span>
               </div>
               <div className="flex items-center gap-1 px-3 py-2 bg-secondary rounded-lg">
                 <Star className="h-4 w-4 text-chart-4 fill-chart-4" />
-                <span className="text-sm font-medium text-secondary-foreground">4.8</span>
+                <span className="text-sm font-medium text-secondary-foreground">{recipe.rating}</span>
               </div>
             </div>
 
             <p className="text-muted-foreground leading-relaxed mb-6">
-              A comforting classic that fills your kitchen with the most incredible aroma.
-              Juicy herb-marinated chicken paired with perfectly caramelized root vegetables
-              makes this the ultimate weeknight dinner.
+              {recipe.description}
             </p>
 
             {/* Quick Steps */}
@@ -71,7 +80,7 @@ export function FeaturedRecipe() {
                 Quick Steps
               </h3>
               <div className="flex flex-col gap-3">
-                {steps.map((step, i) => (
+                {steps.slice(0, 4).map((step: string, i: number) => (
                   <div key={i} className="flex items-start gap-3">
                     <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-[11px] font-bold text-primary-foreground">
                       {i + 1}

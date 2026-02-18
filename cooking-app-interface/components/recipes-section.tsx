@@ -4,11 +4,18 @@ import { useState } from "react"
 import { RecipeCard } from "@/components/recipe-card"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { recipes } from "@/lib/data"
+import { useRecipes } from "@/hooks/useFirestore"
+import { recipes as staticRecipes } from "@/lib/data"
 
 export function RecipesSection() {
   const [activeTab, setActiveTab] = useState("trending")
   const [visibleCount, setVisibleCount] = useState(6)
+  const { recipes: firestoreRecipes, loading } = useRecipes()
+
+  // Use static recipes if firestore is loading or empty
+  const recipes = !loading && firestoreRecipes.length > 0
+    ? firestoreRecipes
+    : staticRecipes
 
   // Simple filtering logic for demo purposes
   const filteredRecipes = recipes.filter(recipe => {
@@ -39,13 +46,6 @@ export function RecipesSection() {
             </TabsList>
           </Tabs>
         </div>
-
-        {/* We need to use a client side wrapper for motion if framer-motion is not installed, 
-            but the user didn't ask for it specifically. I'll check package.json if I haven't. 
-            Wait, I saw package.json, framer-motion WAS NOT there. 
-            I should NOT use framer-motion if not installed. 
-            I will use standard CSS classes I just added. 
-        */}
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredRecipes.slice(0, visibleCount).map((recipe, index) => (

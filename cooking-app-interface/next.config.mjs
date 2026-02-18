@@ -30,6 +30,14 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'd1hbpr09pwz0sk.cloudfront.net',
       },
+      {
+        protocol: 'https',
+        hostname: 'www.thebossykitchen.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'encrypted-tbn0.gstatic.com',
+      },
     ],
   },
 }
