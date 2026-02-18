@@ -1,0 +1,24 @@
+<svg width="240" height="60" viewBox="0 0 240 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- S -->
+  <path d="M25 42C21 42 18 40 18 36.5C18 34 19.5 32 23 31L26 30C30 29 32 27 32 24C32 19.5 28.5 17 24 17C19.5 17 17 19 16 22M25 17C29 17 32 19 32 22.5C32 25 30.5 27 27 28L24 29C20 30 18 32 18 35C18 39.5 21.5 42 26 42C30.5 42 33 40 34 37" stroke="#F97316" stroke-width="3.5" stroke-linecap="round"/>
+  
+  <!-- A -->
+  <path d="M42 42L50 18L58 42M45 33H55" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- V (Stylized Utensil) -->
+  <path d="M78 42L72 18H84L78 42Z" fill="#F97316"/>
+  <path d="M78 18V28" stroke="white" stroke-width="2"/>
+  <circle cx="78" cy="15" r="2" fill="#F97316"/>
+
+  <!-- O -->
+  <circle cx="102" cy="30" r="12" stroke="currentColor" stroke-width="3.5"/>
+  
+  <!-- R -->
+  <path d="M124 42V18H132C136 18 139 21 139 25C139 29 136 32 132 32H124M132 32L140 42" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- L -->
+  <path d="M152 18V42H166" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Y -->
+  <path d="M178 18L186 32L194 18M186 32V42" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
